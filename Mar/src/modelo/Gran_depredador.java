@@ -11,6 +11,8 @@ package modelo;
  */
 public class Gran_depredador extends Animal {
     
+    public Gran_depredador(){}
+    
     public Gran_depredador(int fech, String esp){
         
         super(fech, esp);

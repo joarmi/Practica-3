@@ -12,17 +12,20 @@ import java.util.Random;
  * @author Javier Argente Micó
  */
 public abstract class Animal {
-    
+
     private int fecha_nac;
     String especie;
+
+    public Animal() {
+    }
+
+    ;
     
-    public Animal(){};
-    
-    public Animal(int fech, String esp){
-        
+    public Animal(int fech, String esp) {
+
         this.fecha_nac = fech;
         this.especie = esp;
-        
+
     }
 
     public void setFecha_nac(int fecha_nac) {
@@ -40,56 +43,59 @@ public abstract class Animal {
     public String getEspecie() {
         return especie;
     }
-    
-    public int comer(){
-        
+
+    public int comer() {
+
         Random r = new Random(System.currentTimeMillis());
         int valor;
-        
-        if(this instanceof Gran_depredador)
+
+        if (this instanceof Gran_depredador) {
             valor = r.nextInt(3);
-        else if(this instanceof Pez_grande)
-            valor = r.nextInt(2)+1;
-        else
-            valor = r.nextInt(2000000-1000000+1) + 1000000;
-        
+        } else if (this instanceof Pez_grande) {
+            valor = r.nextInt(2) + 1;
+        } else {
+            valor = r.nextInt(2000000 - 1000000 + 1) + 1000000;
+        }
+
         return valor;
     }
-    
-    public boolean reproduccion(){
-        
+
+    public boolean reproduccion() {
+
         boolean nace = false;
         Random r = new Random(System.currentTimeMillis());
-        
+
         int valor = r.nextInt(1000) + 1;
-        
-        if((this instanceof Gran_depredador) && (valor <=35))
+
+        if ((this instanceof Gran_depredador) && (valor <= 35)) {
             nace = true;
-        else if((this instanceof Pez_grande) && (valor >= 198))
+        } else if ((this instanceof Pez_grande) && (valor <= 198)) {
             nace = true;
-        else if((this instanceof Pez_pequeño) && (valor <= 250))
+        } else if ((this instanceof Pez_pequeño) && (valor <= 250)) {
             nace = true;
-        
+        }
+
         return nace;
-        
+
     }
-    
-    public boolean morir(){
-        
+
+    public boolean morir() {
+
         boolean muere = false;
         Random r = new Random(System.currentTimeMillis());
-        
+
         int valor = r.nextInt(1000) + 1;
-        
-         if((this instanceof Gran_depredador) && (valor <=28))
+
+        if ((this instanceof Gran_depredador) && (valor <= 28)) {
             muere = true;
-        else if((this instanceof Pez_grande) && (valor >= 93))
+        } else if ((this instanceof Pez_grande) && (valor <= 93)) {
             muere = true;
-        else if((this instanceof Pez_pequeño) && (valor <= 163))
+        } else if ((this instanceof Pez_pequeño) && (valor <= 163)) {
             muere = true;
-        
+        }
+
         return muere;
-        
+
     }
-    
+
 }

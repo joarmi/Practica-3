@@ -5,6 +5,8 @@
  */
 package modelo;
 
+import java.util.Random;
+
 /**
  *
  * @author Javier Argente Micó
@@ -12,6 +14,18 @@ package modelo;
 public class Pez_grande extends Animal {
     
     private int velocidad;
+    
+    public Pez_grande(){}
+    
+    public Pez_grande(int fech, String esp){
+        
+        super(fech,esp);
+        
+        Random r = new Random(System.currentTimeMillis());
+        
+        this.velocidad = r.nextInt(60-40+1) + 40;
+        
+    } 
     
     public Pez_grande(int fech, String esp, int velocidad){
         
