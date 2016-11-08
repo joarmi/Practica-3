@@ -17,9 +17,11 @@ public class Pez_pequeño extends Animal {
     
     public Pez_pequeño(){}
     
-    public Pez_pequeño(int fech, String esp){
+    public Pez_pequeño(int fech, String esp) throws InterruptedException{
         
         super(fech,esp);
+        
+        Thread.sleep(2);
         
         Random r = new Random(System.currentTimeMillis());
         

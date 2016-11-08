@@ -44,8 +44,10 @@ public abstract class Animal {
         return especie;
     }
 
-    public int comer() {
+    public int comer() throws InterruptedException {
 
+        Thread.sleep(2);
+        
         Random r = new Random(System.currentTimeMillis());
         int valor;
 
@@ -60,7 +62,9 @@ public abstract class Animal {
         return valor;
     }
 
-    public boolean reproduccion() {
+    public boolean reproduccion() throws InterruptedException {
+        
+        Thread.sleep(2);
 
         boolean nace = false;
         Random r = new Random(System.currentTimeMillis());
@@ -79,7 +83,9 @@ public abstract class Animal {
 
     }
 
-    public boolean morir() {
+    public boolean morir() throws InterruptedException {
+        
+        Thread.sleep(2);
 
         boolean muere = false;
         Random r = new Random(System.currentTimeMillis());
