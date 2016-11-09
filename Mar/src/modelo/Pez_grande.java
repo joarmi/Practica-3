@@ -21,7 +21,7 @@ public class Pez_grande extends Animal {
         
         super(fech,esp);
         
-        Thread.sleep(2);
+        Thread.sleep(1);
         
         Random r = new Random(System.currentTimeMillis());
         

@@ -36,7 +36,7 @@ public class Mar {
         return fecha;
     }
 
-    public void crear_vida() {
+    public void crear_vida() throws InterruptedException {
 
         this.crear_depredadores();
         this.crear_peces_grandes();
@@ -75,7 +75,7 @@ public class Mar {
 
     }
 
-    public void crear_peces_grandes() {
+    public void crear_peces_grandes() throws InterruptedException {
 
         Random r = new Random(System.currentTimeMillis());
         int valor = r.nextInt(140 - 130 + 1) + 130;
@@ -115,7 +115,7 @@ public class Mar {
 
     }
 
-    public void crear_peces_pequeños() {
+    public void crear_peces_pequeños() throws InterruptedException {
 
         Random r = new Random(System.currentTimeMillis());
         int valor = r.nextInt(2100 - 1800 + 1) + 1800;
@@ -330,7 +330,7 @@ public class Mar {
 
     }
 
-    public void pasar_dia() {
+    public void pasar_dia() throws InterruptedException {
 
         Animal a_aux;
         int size = this.fauna.size();
@@ -364,7 +364,7 @@ public class Mar {
 
     }
 
-    public int pasar_dia_gran_depredador(Animal a_aux, int size, int i) {
+    public int pasar_dia_gran_depredador(Animal a_aux, int size, int i) throws InterruptedException {
 
         Gran_depredador gd_aux;
         int indice_animal;
@@ -411,7 +411,7 @@ public class Mar {
 
     }
 
-    public int pasar_dia_pez_grande(Animal a_aux, int size, int i) {
+    public int pasar_dia_pez_grande(Animal a_aux, int size, int i) throws InterruptedException {
 
         Pez_grande pg_aux;
         int indice_animal;
@@ -458,7 +458,7 @@ public class Mar {
 
     }
 
-    public int pasar_dia_pez_pequeño(Animal a_aux, int size, int i) {
+    public int pasar_dia_pez_pequeño(Animal a_aux, int size, int i) throws InterruptedException {
 
         Pez_pequeño pp_aux;
         boolean muerto = false;
