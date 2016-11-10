@@ -18,10 +18,14 @@ public class Mar {
     private ArrayList<Animal> fauna = new ArrayList<Animal>();
     private float temperatura;
     private int fecha;
+    private int caza_furtiva;
+    private int contaminacion;
 
     public Mar() {
         this.temperatura = 18;
         this.fecha = 1;
+        this.caza_furtiva = 0;
+        this.contaminacion = 0;
     }
 
     public double getKrill_plancton() {
@@ -34,6 +38,12 @@ public class Mar {
 
     public int getFecha() {
         return fecha;
+    }
+
+    private void temperatura_brusco(int valor) {
+
+        this.temperatura += valor;
+
     }
 
     public void crear_vida() throws InterruptedException {
@@ -357,10 +367,18 @@ public class Mar {
             i++;
 
         }
+        
+        if(this.caza_furtiva > 0)
+            this.caza_furtiva -= 1;
+        
+        if(this.contaminacion > 0)
+            this.contaminacion -= 1;
 
         this.crece_krill_plancton();
         this.cambio_temperatura();
         this.fecha++;
+        
+        System.out.print("Ha pasado el dia \n");
 
     }
 
@@ -369,14 +387,6 @@ public class Mar {
         Gran_depredador gd_aux;
         int indice_animal;
         boolean muerto = false;
-
-        if (a_aux.reproduccion()) {
-
-            gd_aux = new Gran_depredador(this.fecha, a_aux.getEspecie());
-            this.fauna.add(gd_aux);
-            //size = this.fauna.size();
-
-        }
 
         for (int indice = 0; indice < a_aux.comer(); indice++) {
 
@@ -399,12 +409,36 @@ public class Mar {
 
         }
 
+        if (a_aux.reproduccion() && muerto == false) {
+
+            gd_aux = new Gran_depredador(this.fecha, a_aux.getEspecie());
+            this.fauna.add(gd_aux);
+            //size = this.fauna.size();
+
+        }
+
         if (a_aux.morir() && muerto == false) {
 
             this.fauna.remove(i);
             //size = this.fauna.size();
             size -= 1;
+            muerto = true;
 
+        }
+        
+        if(this.caza_furtiva > 0 && a_aux.morir_cazado() && muerto == false){
+            
+            this.fauna.remove(i);
+            size -= 1;
+            muerto = true;
+            
+        }
+        
+        if(this.contaminacion > 0 && a_aux.morir_contaminacion() && muerto == false){
+            
+            this.fauna.remove(i);
+            size -= 1;
+            
         }
 
         return size;
@@ -416,14 +450,6 @@ public class Mar {
         Pez_grande pg_aux;
         int indice_animal;
         boolean muerto = false;
-
-        if (a_aux.reproduccion()) {
-
-            pg_aux = new Pez_grande(this.fecha, a_aux.getEspecie(), ((Pez_grande) a_aux).getVelocidad());
-            this.fauna.add(pg_aux);
-            //size = this.fauna.size();
-
-        }
 
         for (int indice = 0; indice < a_aux.comer(); indice++) {
 
@@ -445,13 +471,29 @@ public class Mar {
             }
 
         }
-        
+
+        if (a_aux.reproduccion() && muerto == false) {
+
+            pg_aux = new Pez_grande(this.fecha, a_aux.getEspecie(), ((Pez_grande) a_aux).getVelocidad());
+            this.fauna.add(pg_aux);
+            //size = this.fauna.size();
+
+        }
+
         if (a_aux.morir() && muerto == false) {
 
             this.fauna.remove(i);
             //size = this.fauna.size();
             size -= 1;
+            muerto = true;
 
+        }
+        
+        if(this.contaminacion > 0 && a_aux.morir_contaminacion() && muerto == false){
+            
+            this.fauna.remove(i);
+            size -= 1;
+            
         }
 
         return size;
@@ -462,14 +504,6 @@ public class Mar {
 
         Pez_pequeño pp_aux;
         boolean muerto = false;
-
-        if (a_aux.reproduccion()) {
-
-            pp_aux = new Pez_pequeño(this.fecha, a_aux.getEspecie(), ((Pez_pequeño) a_aux).getVelocidad());
-            this.fauna.add(pp_aux);
-            //size = this.fauna.size();
-
-        }
 
         int comida = a_aux.comer();
 
@@ -483,13 +517,29 @@ public class Mar {
         } else {
             this.krill_plancton -= comida;
         }
-        
+
+        if (a_aux.reproduccion() && muerto == false) {
+
+            pp_aux = new Pez_pequeño(this.fecha, a_aux.getEspecie(), ((Pez_pequeño) a_aux).getVelocidad());
+            this.fauna.add(pp_aux);
+            //size = this.fauna.size();
+
+        }
+
         if (a_aux.morir() && muerto == false) {
 
             this.fauna.remove(i);
             //size = this.fauna.size();
             size -= 1;
+            muerto = true;
 
+        }
+        
+        if(this.contaminacion > 0 && a_aux.morir_contaminacion() && muerto == false){
+            
+            this.fauna.remove(i);
+            size -= 1;
+            
         }
 
         return size;

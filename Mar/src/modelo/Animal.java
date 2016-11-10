@@ -103,5 +103,39 @@ public abstract class Animal {
         return muere;
 
     }
+    
+    public boolean morir_contaminacion() throws InterruptedException{
+        
+        Thread.sleep(1);
+        
+        boolean muere = false;
+        Random r = new Random(System.currentTimeMillis());
+
+        int valor = r.nextInt(1000) + 1;
+        
+        if (valor <= 100) {
+            muere = true;
+        }
+
+        return muere;
+        
+    }
+    
+    public boolean morir_cazado() throws InterruptedException{
+        
+        Thread.sleep(1);
+        
+        boolean muere = false;
+        Random r = new Random(System.currentTimeMillis());
+
+        int valor = r.nextInt(1000) + 1;
+        
+        if (valor <= 150) {
+            muere = true;
+        }
+
+        return muere;
+        
+    }
 
 }
