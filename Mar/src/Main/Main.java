@@ -16,7 +16,7 @@ public class Main {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
         
         Mar mar = new Mar();
         mar.crear_vida();
