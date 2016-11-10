@@ -11,7 +11,7 @@ import java.util.Random;
  *
  * @author Javier Argente Micó
  */
-public class Pez_grande extends Animal {
+public class Pez_grande extends Animal implements java.io.Serializable {
     
     private int velocidad;
     
@@ -38,6 +38,15 @@ public class Pez_grande extends Animal {
 
     public int getVelocidad() {
         return velocidad;
+    }
+    
+    @Override
+    public String toString() {
+
+        String s = "Especie: " + this.getEspecie() + " - Dia de nacimiento: " + this.getFecha_nac() + " - Velocidad: " + this.getVelocidad();
+
+        return s;
+
     }
     
 }

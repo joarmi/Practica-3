@@ -9,7 +9,7 @@ package modelo;
  *
  * @author Javier Argente Micó
  */
-public class Gran_depredador extends Animal {
+public class Gran_depredador extends Animal implements java.io.Serializable {
     
     public Gran_depredador(){}
     
@@ -17,6 +17,15 @@ public class Gran_depredador extends Animal {
         
         super(fech, esp);
         
+    }
+    
+    @Override
+    public String toString() {
+
+        String s = "Especie: " + this.getEspecie() + " - Dia de nacimiento: " + this.getFecha_nac();
+
+        return s;
+
     }
     
 }

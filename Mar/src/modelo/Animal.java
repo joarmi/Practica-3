@@ -11,10 +11,10 @@ import java.util.Random;
  *
  * @author Javier Argente Micó
  */
-public abstract class Animal {
+public abstract class Animal implements java.io.Serializable {
 
     private int fecha_nac;
-    String especie;
+    private String especie;
 
     public Animal() {
     }
@@ -44,6 +44,7 @@ public abstract class Animal {
         return especie;
     }
 
+    //Funcion que devuelve la cantidad de ha comer en función de quien realice la llamada
     public int comer() throws InterruptedException {
 
         Thread.sleep(1);
@@ -62,6 +63,7 @@ public abstract class Animal {
         return valor;
     }
 
+    //Funcion que devuelve un booleano que indica si quien llama a la funcion se reproduce
     public boolean reproduccion() throws InterruptedException {
         
         Thread.sleep(1);
@@ -83,6 +85,7 @@ public abstract class Animal {
 
     }
 
+    //Funcion que devuelve un booleano que indica si quien llama a la funcion muere por enfermedad o causas naturales
     public boolean morir() throws InterruptedException {
         
         Thread.sleep(1);
@@ -104,6 +107,7 @@ public abstract class Animal {
 
     }
     
+    //Funcion que devuelve un booleano que indica si quien llama a la funcion muere por contaminacion
     public boolean morir_contaminacion() throws InterruptedException{
         
         Thread.sleep(1);
@@ -121,6 +125,7 @@ public abstract class Animal {
         
     }
     
+    ////Funcion que devuelve un booleano que indica si quien llama a la funcion muere porque ha sido cazado y sacrificado
     public boolean morir_cazado() throws InterruptedException{
         
         Thread.sleep(1);

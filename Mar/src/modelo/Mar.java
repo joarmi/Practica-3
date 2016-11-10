@@ -12,7 +12,7 @@ import java.util.Random;
  *
  * @author Javier Argente Micó
  */
-public class Mar {
+public class Mar implements java.io.Serializable {
 
     private double krill_plancton;
     private ArrayList<Animal> fauna = new ArrayList<Animal>();
@@ -62,15 +62,28 @@ public class Mar {
 
     }
 
+    //Funcion que elimina todos los elementos del Array fauna
+    public void reiniciar(){
+        
+        this.fauna.clear();
+        
+    }
+    
+    //Funcion que sirve para crear a todos los animales que formarán el Array fauna
     public void crear_vida() throws InterruptedException {
 
-        this.crear_depredadores();
-        this.crear_peces_grandes();
+        System.out.print("Creando mar... \n");
+        
         this.crear_peces_pequeños();
+        this.crear_peces_grandes();
+        this.crear_depredadores();
         this.crear_krill_plancton();
+        
+        System.out.print("Mar creado \n");
 
     }
 
+    //Funcion que genera a los animales del grupo de grandes depredadores
     public void crear_depredadores() {
 
         Random r = new Random(System.currentTimeMillis());
@@ -101,6 +114,7 @@ public class Mar {
 
     }
 
+    //Funcion que genera a los animales del grupo de peces grandes
     public void crear_peces_grandes() throws InterruptedException {
 
         Random r = new Random(System.currentTimeMillis());
@@ -141,6 +155,7 @@ public class Mar {
 
     }
 
+    //Funcion que genera a los animales del grupo de peces pequeños
     public void crear_peces_pequeños() throws InterruptedException {
 
         Random r = new Random(System.currentTimeMillis());
@@ -181,6 +196,7 @@ public class Mar {
 
     }
 
+    //Funcion que genera la cantidad de krill_plancton que habrá en el mar
     public void crear_krill_plancton() {
 
         Random r = new Random(System.currentTimeMillis());
@@ -191,6 +207,7 @@ public class Mar {
 
     }
 
+    //Funcion que cambio la temperatura al pasar de dia
     public void cambio_temperatura() {
 
         Random r = new Random(System.currentTimeMillis());
@@ -214,6 +231,7 @@ public class Mar {
 
     }
 
+    //Funcion que devuelve la cantidad de grandes depredadores que hay en el mar
     public int numero_gran_depredador() {
 
         int cantidad = 0;
@@ -233,6 +251,7 @@ public class Mar {
 
     }
 
+    //Funcion que devuelve la cantidad de peces grandes que hay en el mar
     public int numero_pez_grande() {
 
         int cantidad = 0;
@@ -252,6 +271,7 @@ public class Mar {
 
     }
 
+    //Funcion que devuelve la cantidad de peces pequeños que hay en el mar
     public int numero_pez_pequeño() {
 
         int cantidad = 0;
@@ -271,6 +291,7 @@ public class Mar {
 
     }
 
+    //Funcin que devuelve la cantidad de individuos de una subespecie indicada
     public int numero_especie(String especie) {
 
         int cantidad = 0;
@@ -290,6 +311,7 @@ public class Mar {
 
     }
 
+    //Funcion que devuelve la posicion en el Array de fauna, del pez grande que va ha ser devorado
     public int pez_grande_comer() {
 
         int velocidad = 100;
@@ -317,6 +339,7 @@ public class Mar {
 
     }
 
+    //Funcion que devuelve la posicion en el Array de fauna, del pez pequeño que va ha ser devorado
     public int pez_pequeño_comer() {
 
         int velocidad = 100;
@@ -344,6 +367,7 @@ public class Mar {
 
     }
 
+    //Funcion que hace crecer la cantidad de plancton en funcion de la temperatura del mar
     public void crece_krill_plancton() {
 
         if (this.temperatura > 19 || this.temperatura < 17) {
@@ -356,8 +380,11 @@ public class Mar {
 
     }
 
+    //Funcion encargada de calcular comer, reproducirse y morir para todos los animales al pasar el dia
     public void pasar_dia() throws InterruptedException {
 
+        System.out.print("Cargando... \n");
+        
         Animal a_aux;
         int size = this.fauna.size();
         int i = 0;
@@ -368,15 +395,24 @@ public class Mar {
 
             if (a_aux instanceof Gran_depredador) {
 
-                size = this.pasar_dia_gran_depredador(a_aux, size, i);
+                size = this.pasar_dia_gran_depredador(a_aux, size).getSize();
+                
+                if(this.pasar_dia_gran_depredador(a_aux, size).isMuerto())
+                    i--;
 
             } else if (a_aux instanceof Pez_grande) {
 
-                size = this.pasar_dia_pez_grande(a_aux, size, i);
+                size = this.pasar_dia_pez_grande(a_aux, size).getSize();
+                
+                if(this.pasar_dia_pez_grande(a_aux, size).isMuerto())
+                    i--;
 
             } else {
 
-                size = this.pasar_dia_pez_pequeño(a_aux, size, i);
+                size = this.pasar_dia_pez_pequeño(a_aux, size).getSize();
+                
+                if(this.pasar_dia_pez_pequeño(a_aux, size).isMuerto())
+                    i--;
 
             }
 
@@ -398,11 +434,12 @@ public class Mar {
 
     }
 
-    public int pasar_dia_gran_depredador(Animal a_aux, int size, int i) throws InterruptedException {
+    //Funcion encargada de realizar comer, reproducirse y morir para los grandes depredadores
+    public Auxiliar pasar_dia_gran_depredador(Animal a_aux, int size) throws InterruptedException {
 
         Gran_depredador gd_aux;
         int indice_animal;
-        boolean muerto = false;
+        Auxiliar aux = new Auxiliar(size, false);
 
         for (int indice = 0; indice < a_aux.comer(); indice++) {
 
@@ -410,62 +447,60 @@ public class Mar {
 
             if (indice_animal == -1) {
 
-                this.fauna.remove(i);
-                //size = this.fauna.size();
-                size -= 1;
-                muerto = true;
+                this.fauna.remove(a_aux);
+                aux.setSize(-1);
+                aux.setMuerto(true);
 
             } else {
 
                 this.fauna.remove(indice_animal);
-                //size = this.fauna.size();
-                size -= 1;
+                aux.setSize(-1);
 
             }
 
         }
 
-        if (a_aux.reproduccion() && muerto == false) {
+        if (a_aux.reproduccion() && aux.isMuerto() == false) {
 
             gd_aux = new Gran_depredador(this.fecha, a_aux.getEspecie());
             this.fauna.add(gd_aux);
-            //size = this.fauna.size();
 
         }
 
-        if (a_aux.morir() && muerto == false) {
+        if (a_aux.morir() && aux.isMuerto() == false) {
 
-            this.fauna.remove(i);
-            //size = this.fauna.size();
-            size -= 1;
-            muerto = true;
+            this.fauna.remove(a_aux);
+            aux.setSize(-1);
+            aux.setMuerto(true);
 
         }
         
-        if(this.caza_furtiva > 0 && a_aux.morir_cazado() && muerto == false){
+        if(this.caza_furtiva > 0 && a_aux.morir_cazado() && aux.isMuerto() == false){
             
-            this.fauna.remove(i);
-            size -= 1;
-            muerto = true;
+            this.fauna.remove(a_aux);
+            aux.setSize(-1);
+            aux.setMuerto(true);
             
         }
         
-        if(this.contaminacion > 0 && a_aux.morir_contaminacion() && muerto == false){
+        if(this.contaminacion > 0 && a_aux.morir_contaminacion() && aux.isMuerto() == false){
             
-            this.fauna.remove(i);
-            size -= 1;
+            this.fauna.remove(a_aux);
+            aux.setSize(-1);
+            aux.setMuerto(true);
             
         }
 
-        return size;
+        return aux;
 
     }
 
-    public int pasar_dia_pez_grande(Animal a_aux, int size, int i) throws InterruptedException {
+    //Funcion encargada de realizar comer, reproducirse y morir para los peces grandes
+    public Auxiliar pasar_dia_pez_grande(Animal a_aux, int size) throws InterruptedException {
 
         Pez_grande pg_aux;
         int indice_animal;
-        boolean muerto = false;
+        Auxiliar aux = new Auxiliar(size, false);
 
         for (int indice = 0; indice < a_aux.comer(); indice++) {
 
@@ -473,93 +508,126 @@ public class Mar {
 
             if (indice_animal == -1) {
 
-                this.fauna.remove(i);
-                //size = this.fauna.size();
-                size -= 1;
-                muerto = true;
+                this.fauna.remove(a_aux);
+                aux.setSize(-1);
+                aux.setMuerto(true);
 
             } else {
 
                 this.fauna.remove(indice_animal);
-                //size = this.fauna.size();
-                size -= 1;
+                aux.setSize(-1);
 
             }
 
         }
 
-        if (a_aux.reproduccion() && muerto == false) {
+        if (a_aux.reproduccion() && aux.isMuerto() == false) {
 
             pg_aux = new Pez_grande(this.fecha, a_aux.getEspecie(), ((Pez_grande) a_aux).getVelocidad());
             this.fauna.add(pg_aux);
-            //size = this.fauna.size();
 
         }
 
-        if (a_aux.morir() && muerto == false) {
+        if (a_aux.morir() && aux.isMuerto() == false) {
 
-            this.fauna.remove(i);
-            //size = this.fauna.size();
-            size -= 1;
-            muerto = true;
+            this.fauna.remove(a_aux);
+            aux.setSize(-1);
+            aux.setMuerto(true);
 
         }
         
-        if(this.contaminacion > 0 && a_aux.morir_contaminacion() && muerto == false){
+        if(this.contaminacion > 0 && a_aux.morir_contaminacion() && aux.isMuerto() == false){
             
-            this.fauna.remove(i);
-            size -= 1;
+            this.fauna.remove(a_aux);
+            aux.setSize(-1);
+            aux.setMuerto(true);
             
         }
 
-        return size;
+        return aux;
 
     }
 
-    public int pasar_dia_pez_pequeño(Animal a_aux, int size, int i) throws InterruptedException {
+    //Funcion encargada de realizar comer, reproducirse y morir para los peces pequeños
+    public Auxiliar pasar_dia_pez_pequeño(Animal a_aux, int size) throws InterruptedException {
 
         Pez_pequeño pp_aux;
-        boolean muerto = false;
+        Auxiliar aux = new Auxiliar(size, false);
 
         int comida = a_aux.comer();
 
         if (comida > this.krill_plancton) {
 
-            this.fauna.remove(i);
-            //size = this.fauna.size();
-            size -= 1;
-            muerto = true;
+            this.fauna.remove(a_aux);
+            aux.setSize(-1);
+            aux.setMuerto(true);
 
         } else {
             this.krill_plancton -= comida;
         }
 
-        if (a_aux.reproduccion() && muerto == false) {
+        if (a_aux.reproduccion() && aux.isMuerto() == false) {
 
             pp_aux = new Pez_pequeño(this.fecha, a_aux.getEspecie(), ((Pez_pequeño) a_aux).getVelocidad());
             this.fauna.add(pp_aux);
-            //size = this.fauna.size();
 
         }
 
-        if (a_aux.morir() && muerto == false) {
+        if (a_aux.morir() && aux.isMuerto() == false) {
 
-            this.fauna.remove(i);
-            //size = this.fauna.size();
-            size -= 1;
-            muerto = true;
+            this.fauna.remove(a_aux);
+            aux.setSize(-1);
+            aux.setMuerto(true);
 
         }
         
-        if(this.contaminacion > 0 && a_aux.morir_contaminacion() && muerto == false){
+        if(this.contaminacion > 0 && a_aux.morir_contaminacion() && aux.isMuerto() == false){
             
-            this.fauna.remove(i);
-            size -= 1;
+            this.fauna.remove(a_aux);
+            aux.setSize(-1);
+            aux.setMuerto(true);
             
         }
 
-        return size;
+        return aux;
 
+    }
+    
+    //Funcion que devuelve una Array con los detalles de todos los animales ordenados por grupos
+    public ArrayList<String> mostrar_detalles(){
+        
+        ArrayList<String> detalles = new ArrayList<String>();
+        Animal a_aux;
+        
+        for(int i = 0; i < this.fauna.size(); i++){
+            
+            a_aux = this.fauna.get(i);
+            
+            if(a_aux instanceof Gran_depredador)
+                detalles.add(((Gran_depredador) a_aux).toString());
+            
+        }
+        
+        for(int i = 0; i < this.fauna.size(); i++){
+            
+            a_aux = this.fauna.get(i);
+            
+            if(a_aux instanceof Pez_grande)
+                detalles.add(((Pez_grande) a_aux).toString());
+            
+        }
+        
+        for(int i = 0; i < this.fauna.size(); i++){
+            
+            a_aux = this.fauna.get(i);
+            
+            if(a_aux instanceof Pez_pequeño)
+                detalles.add(((Pez_pequeño) a_aux).toString());
+            
+        }
+        
+        return detalles;
+        
     }
 
 }
