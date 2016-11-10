@@ -40,7 +40,23 @@ public class Mar {
         return fecha;
     }
 
-    private void temperatura_brusco(int valor) {
+    public int getCaza_furtiva() {
+        return caza_furtiva;
+    }
+
+    public int getContaminacion() {
+        return contaminacion;
+    }
+
+    public void setCaza_furtiva(int caza_furtiva) {
+        this.caza_furtiva = caza_furtiva;
+    }
+
+    public void setContaminacion(int contaminacion) {
+        this.contaminacion = contaminacion;
+    }
+
+    public void temperatura_brusco(int valor) {
 
         this.temperatura += valor;
 
