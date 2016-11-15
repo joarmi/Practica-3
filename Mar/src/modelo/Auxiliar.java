@@ -13,11 +13,13 @@ public class Auxiliar {
     
     private int size;
     private boolean muerto;
+    private int retroceder;
     
     public Auxiliar(int size, boolean muere){
         
         this.size = size;
         this.muerto = muere;
+        this.retroceder = 0;
         
     }
 
@@ -29,12 +31,20 @@ public class Auxiliar {
         return muerto;
     }
 
+    public int getRetroceder() {
+        return retroceder;
+    }
+
     public void setSize(int size) {
         this.size += size;
     }
 
     public void setMuerto(boolean muerto) {
         this.muerto = muerto;
+    }
+
+    public void setRetroceder(int retroceder) {
+        this.retroceder += retroceder;
     }
     
 }

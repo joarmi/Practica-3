@@ -388,30 +388,41 @@ public class Mar implements java.io.Serializable {
         Animal a_aux;
         int size = this.fauna.size();
         int i = 0;
+        Auxiliar aux;
 
         while (i < size) {
 
             a_aux = this.fauna.get(i);
 
             if (a_aux instanceof Gran_depredador) {
-
-                size = this.pasar_dia_gran_depredador(a_aux, size).getSize();
                 
-                if(this.pasar_dia_gran_depredador(a_aux, size).isMuerto())
+                aux = this.pasar_dia_gran_depredador(a_aux, size, i);
+
+                size = aux.getSize();
+                
+                if(aux.isMuerto())
                     i--;
+                
+                i += aux.getRetroceder();
 
             } else if (a_aux instanceof Pez_grande) {
-
-                size = this.pasar_dia_pez_grande(a_aux, size).getSize();
                 
-                if(this.pasar_dia_pez_grande(a_aux, size).isMuerto())
+                aux = this.pasar_dia_pez_grande(a_aux, size, i);
+
+                size = aux.getSize();
+                
+                if(aux.isMuerto())
                     i--;
+                
+                i += aux.getRetroceder();
 
             } else {
-
-                size = this.pasar_dia_pez_pequeño(a_aux, size).getSize();
                 
-                if(this.pasar_dia_pez_pequeño(a_aux, size).isMuerto())
+                aux = this.pasar_dia_pez_pequeño(a_aux, size);
+
+                size = aux.getSize();
+                
+                if(aux.isMuerto())
                     i--;
 
             }
@@ -435,7 +446,7 @@ public class Mar implements java.io.Serializable {
     }
 
     //Funcion encargada de realizar comer, reproducirse y morir para los grandes depredadores
-    public Auxiliar pasar_dia_gran_depredador(Animal a_aux, int size) throws InterruptedException {
+    public Auxiliar pasar_dia_gran_depredador(Animal a_aux, int size, int i) throws InterruptedException {
 
         Gran_depredador gd_aux;
         int indice_animal;
@@ -444,7 +455,7 @@ public class Mar implements java.io.Serializable {
         for (int indice = 0; indice < a_aux.comer(); indice++) {
 
             indice_animal = this.pez_grande_comer();
-
+            
             if (indice_animal == -1) {
 
                 this.fauna.remove(a_aux);
@@ -456,6 +467,12 @@ public class Mar implements java.io.Serializable {
                 this.fauna.remove(indice_animal);
                 aux.setSize(-1);
 
+            }
+            
+            if(indice_animal < i && aux.isMuerto() == false){
+                
+                aux.setRetroceder(-1);
+                
             }
 
         }
@@ -496,7 +513,7 @@ public class Mar implements java.io.Serializable {
     }
 
     //Funcion encargada de realizar comer, reproducirse y morir para los peces grandes
-    public Auxiliar pasar_dia_pez_grande(Animal a_aux, int size) throws InterruptedException {
+    public Auxiliar pasar_dia_pez_grande(Animal a_aux, int size, int i) throws InterruptedException {
 
         Pez_grande pg_aux;
         int indice_animal;
@@ -517,6 +534,12 @@ public class Mar implements java.io.Serializable {
                 this.fauna.remove(indice_animal);
                 aux.setSize(-1);
 
+            }
+            
+            if(indice_animal < i && aux.isMuerto() == false){
+                
+                aux.setRetroceder(-1);
+                
             }
 
         }

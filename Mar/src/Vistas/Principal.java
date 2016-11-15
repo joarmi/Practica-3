@@ -59,7 +59,6 @@ public class Principal extends javax.swing.JFrame {
         
         try{
             
-            
             ois = new ObjectInputStream(new FileInputStream(myFile));
             mar = (Mar)this.ois.readObject();
             
