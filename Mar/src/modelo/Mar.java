@@ -462,11 +462,19 @@ public class Mar implements java.io.Serializable {
                 aux.setSize(-1);
                 aux.setMuerto(true);
 
-            } else {
+            } 
+            
+            if(indice_animal != -1 && indice_animal <= aux.getSize() && aux.isMuerto() == false) {
 
                 this.fauna.remove(indice_animal);
                 aux.setSize(-1);
 
+            }
+            
+            if(indice_animal != -1 && indice_animal > aux.getSize() && aux.isMuerto() == false){
+                
+                this.fauna.remove(indice_animal);
+                
             }
             
             if(indice_animal < i && aux.isMuerto() == false){
@@ -529,11 +537,19 @@ public class Mar implements java.io.Serializable {
                 aux.setSize(-1);
                 aux.setMuerto(true);
 
-            } else {
+            } 
+            
+            if(indice_animal != -1 && indice_animal <= aux.getSize() && aux.isMuerto() == false) {
 
                 this.fauna.remove(indice_animal);
                 aux.setSize(-1);
 
+            }
+            
+            if(indice_animal != -1 && indice_animal > aux.getSize() && aux.isMuerto() == false){
+                
+                this.fauna.remove(indice_animal);
+                
             }
             
             if(indice_animal < i && aux.isMuerto() == false){
